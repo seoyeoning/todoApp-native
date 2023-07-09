@@ -1,7 +1,14 @@
-import { FlatList, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import {
+  FlatList,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import React from "react";
 import Favorite from "./Favorite";
-import { SwipeListView } from "react-native-swipe-list-view";
+import { SwipeRow } from "react-native-swipe-list-view";
 
 const exhibition = [
   {
@@ -60,38 +67,58 @@ const exhibition = [
   },
 ];
 
+// 스프롤뷰만 적용한 버전
 // const Favorites = () => {
 //   return (
-//     <View>
-//       {exhibition.map((data, index) => {
-//         return <Favorite key={index} data={data} />;
-//       })}
+//     <ScrollView>
+//       <View>
+//         {exhibition.map((data, index) => {
+//           return <Favorite key={index} data={data} />;
+//         })}
+//       </View>
+//     </ScrollView>
+//   );
+// };
+// const styles = StyleSheet.create({});
+
+// 스와이프 리스트용
+// const Favorites = () => {
+//   return (
+//     <View style={styles.container}>
+//       <SwipeListView
+//         data={exhibition}
+//         renderItem={(data, rowMap) => <Favorite data={data.item} />}
+//         renderHiddenItem={(data, rowMap) => (
+//           <View style={styles.rowBack}>
+//             <Text>delete</Text>
+//           </View>
+//         )}
+//         disableRightSwipe={true}
+//         rightOpenValue={-75}
+//       />
 //     </View>
 //   );
 // };
 
+// swiperow
 const Favorites = () => {
   return (
-    <View style={styles.container}>
-      <SwipeListView
-        data={exhibition}
-        renderItem={(data, rowMap) => <Favorite data={data.item} />}
-        renderHiddenItem={(data, rowMap) => (
-          <View style={styles.rowBack}>
-            <Text>delete</Text>
-          </View>
-        )}
-        disableRightSwipe={true}
-        rightOpenValue={-75}
-      />
-    </View>
+    <ScrollView>
+      <View style={styles.container}>
+        {exhibition.map((data, index) => (
+          <SwipeRow rightOpenValue={-75} disableRightSwipe={true} key={index}>
+            <View style={styles.rowBack}>
+              <Text>Delete</Text>
+            </View>
+            <Favorite data={data} />
+          </SwipeRow>
+        ))}
+      </View>
+    </ScrollView>
   );
 };
 
-export default Favorites;
-
-// const styles = StyleSheet.create({});
-
+// 스와이프용
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "white",
@@ -106,3 +133,5 @@ const styles = StyleSheet.create({
     paddingRight: 15,
   },
 });
+
+export default Favorites;
