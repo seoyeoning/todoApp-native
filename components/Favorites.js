@@ -95,23 +95,22 @@ const Favorites = () => {
     return testData;
   }
 
-  const handleDeleteItem = (id) => {
-    console.log("삭제");
-    const updatedData = exhibitionData.filter(
-      (exhibition) => exhibition.id !== id
+  const handleDeleteItem = useCallback((id) => {
+    setExhibitionData((prevData) =>
+      prevData.filter((exhibition) => exhibition.id !== id)
     );
-    setExhibitionData(updatedData);
-  };
+  }, []);
+
   const SwipeRowItem = useCallback(
     ({ item }) => {
       const swipeRowRef = useRef(null);
 
-      const onDeleteItem = () => {
+      const onDeleteItem = useCallback(() => {
         handleDeleteItem(item.id);
         if (swipeRowRef.current) {
           swipeRowRef.current.closeRow();
         }
-      };
+      }, [handleDeleteItem, item.id]);
 
       return (
         <SwipeRow ref={swipeRowRef} rightOpenValue={-75} disableRightSwipe>
@@ -122,39 +121,8 @@ const Favorites = () => {
         </SwipeRow>
       );
     },
-    [exhibitionData]
+    [handleDeleteItem]
   );
-
-  // const handleDragEnd = ({ data }) => {
-  //   // Update the exhibitionData state with the modified array
-  //   setExhibitionData(data);
-  // };
-
-  // const renderDraggableItem = useCallback(
-  //   ({ item, index, drag }) => {
-  //     const onGestureEvent = (e) => {
-  //       drag(e);
-  //       if (e.nativeEvent.state === "begun") {
-  //         setDragging(true); // 드래그가 시작되었을 때 dragging 상태를 true로 설정
-  //       }
-  //       if (e.nativeEvent.state === "end") {
-  //         setDragging(false); // 드래그가 종료되었을 때 dragging 상태를 false로 설정
-  //       }
-  //     };
-
-  //     return (
-  //       <PanGestureHandler
-  //         onGestureEvent={onGestureEvent}
-  //         onHandlerStateChange={onGestureEvent}
-  //       >
-  //         <View>
-  //           <SwipeRowItem item={item} index={index} />
-  //         </View>
-  //       </PanGestureHandler>
-  //     );
-  //   },
-  //   [dragging]
-  // );
 
   const handleDragEnd = useCallback(({ data }) => {
     setExhibitionData(data);
