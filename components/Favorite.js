@@ -1,5 +1,6 @@
-import { StyleSheet, Text, View, Image } from "react-native";
-import React from "react";
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import { ColorPicker } from 'react-native-color-picker';
 
 const Favorite = ({ data }) => {
   return (
@@ -23,22 +24,22 @@ export default Favorite;
 
 const styles = StyleSheet.create({
   container: {
-    borderColor: "#CECCC8",
+    borderColor: '#CECCC8',
     borderBottomWidth: 2,
-    backgroundColor: "#F6F5F5",
+    backgroundColor: '#F6F5F5',
     width: 393,
     height: 133,
-    flexDirection: "row",
+    flexDirection: 'row',
   },
   colorBox: {
     width: 20,
     height: 133,
-    borderColor: "#CECCC8",
+    borderColor: '#CECCC8',
     borderBottomWidth: 2,
   },
   exInfo: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
     marginLeft: 10,
   },
   exImage: {
@@ -49,10 +50,10 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   titleText: {
-    color: "#4A4A4A",
+    color: '#4A4A4A',
     marginBottom: 30,
   },
   text: {
-    color: "#4A4A4A",
+    color: '#4A4A4A',
   },
 });
